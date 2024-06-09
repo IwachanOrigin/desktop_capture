@@ -9,6 +9,7 @@ using namespace renderer;
 bool DX11BaseRenderer::init(
   DeviceResources& deviceResources
   , std::shared_ptr<renderer::NVScaler> nvScaler
+  , std::shared_ptr<renderer::NVSharpen> nvSharpen
   , const uint32_t& inputTextureWidth
   , const uint32_t& inputTextureHeight
   , const uint32_t& upscaleTextureWidth
@@ -17,6 +18,7 @@ bool DX11BaseRenderer::init(
 {
   m_deviceResources = deviceResources;
   m_nvScaler = nvScaler;
+  m_nvSharpen = nvSharpen;
   m_inputTextureWidth = inputTextureWidth;
   m_inputTextureHeight = inputTextureHeight;
   m_upscaleTextureWidth = upscaleTextureWidth;
@@ -88,7 +90,7 @@ bool DX11BaseRenderer::render()
   }
 
   // If not upscale, display to InputTexture
-  if (!m_nvScaler)
+  if (!m_nvScaler && !m_nvSharpen)
   {
     // Set the shader's
     m_pipeline.activate();

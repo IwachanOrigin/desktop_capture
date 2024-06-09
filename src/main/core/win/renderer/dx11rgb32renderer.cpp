@@ -80,6 +80,17 @@ bool DX11RGB32Renderer::updateTexture(const uint8_t* newData, const size_t dataS
     m_deviceResources.context()->CSSetUnorderedAccessViews(0, 1, nullUAV.GetAddressOf(), nullptr);
     m_deviceResources.context()->OMSetRenderTargets(1, m_deviceResources.renderTargetView().GetAddressOf(), nullptr);
   }
+  
+  if (m_nvSharpen)
+  {
+    // Calculate
+    m_nvSharpen->dispatch(m_inputSRV.GetAddressOf(), m_upscaledUAV.GetAddressOf());
+    // Release UAV
+    // When writing via shaders, UnorderedAccessView must be opened.
+    ComPtr<ID3D11UnorderedAccessView> nullUAV = nullptr;
+    m_deviceResources.context()->CSSetUnorderedAccessViews(0, 1, nullUAV.GetAddressOf(), nullptr);
+    m_deviceResources.context()->OMSetRenderTargets(1, m_deviceResources.renderTargetView().GetAddressOf(), nullptr);
+  }
 
   // Rendering  
   this->render();

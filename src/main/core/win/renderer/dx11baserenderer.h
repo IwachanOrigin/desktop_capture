@@ -7,6 +7,7 @@
 #include "mesh.h"
 #include "deviceresources.h"
 #include "nvscaler.h"
+#include "nvsharpen.h"
 
 using namespace Microsoft::WRL;
 
@@ -22,6 +23,7 @@ public:
   bool init(
     DeviceResources& deviceResources
     , std::shared_ptr<renderer::NVScaler> nvScaler
+    , std::shared_ptr<renderer::NVSharpen>
     , const uint32_t& inputTextureWidth
     , const uint32_t& inputTextureHeight
     , const uint32_t& upscaleTextureWidth
@@ -44,6 +46,7 @@ protected:
   ComPtr<ID3D11UnorderedAccessView> m_upscaledUAV = nullptr;
   ComPtr<ID3D11ShaderResourceView> m_upscaledSRV = nullptr;
   std::shared_ptr<NVScaler> m_nvScaler = nullptr;
+  std::shared_ptr<NVSharpen> m_nvSharpen = nullptr;
   uint32_t m_upscaleTextureWidth = 0;
   uint32_t m_upscaleTextureHeight = 0;
 

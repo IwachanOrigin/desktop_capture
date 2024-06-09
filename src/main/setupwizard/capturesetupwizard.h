@@ -16,7 +16,7 @@ enum class AdoptRectArea : int
   , UNKNOWN    // This parameter is checking parameter.
 };
 
-enum class CaptureMode : int
+enum class UpscaleMode : int
 {
   DEFAULT = 0
   , UPSCALE_4K
@@ -31,12 +31,12 @@ public:
 
   std::tuple<int, int, int, int, int, int, int, int, int> setup(const std::vector<core::MonitorInfo>& monitors);
 
-  CaptureMode captureMode() const { return m_capMode; }
+  UpscaleMode captureMode() const { return m_capMode; }
   int captureIndex() const { return m_captureIndex; }
 
 private:
   AdoptRectArea m_adoptRectArea = AdoptRectArea::NONE;
-  CaptureMode m_capMode = CaptureMode::DEFAULT;
+  UpscaleMode m_capMode = UpscaleMode::DEFAULT;
   int m_captureIndex = -1;
   int m_windowWidth = 0;
   int m_windowHeight = 0;

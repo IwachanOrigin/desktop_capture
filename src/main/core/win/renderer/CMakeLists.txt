@@ -34,6 +34,8 @@ set(main_src
   mesh.h
   nvscaler.cpp
   nvscaler.h
+  nvsharpen.cpp
+  nvsharpen.h
   pipeline.cpp
   pipeline.h
   SimpleMath.cpp
