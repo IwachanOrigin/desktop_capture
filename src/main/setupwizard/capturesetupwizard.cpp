@@ -112,7 +112,7 @@ std::tuple<int, int, int, int, int, int, int, int, int> sw::CaptureSetupWizard::
     try
     {
       int m = std::stoi(input);
-      m_capMode = static_cast<sw::CaptureMode>(m);
+      m_capMode = static_cast<sw::UpscaleMode>(m);
     }
     catch(const std::invalid_argument& e)
     {
@@ -122,12 +122,12 @@ std::tuple<int, int, int, int, int, int, int, int, int> sw::CaptureSetupWizard::
     {
       std::cerr << e.what() << std::endl;
     }
-  } while (m_capMode < sw::CaptureMode::DEFAULT || m_capMode >= sw::CaptureMode::UNKNOWN);
+  } while (m_capMode < sw::UpscaleMode::DEFAULT || m_capMode >= sw::UpscaleMode::UNKNOWN);
 
   // Setup the output window size
   switch(m_capMode)
   {
-    case setup_wizard::CaptureMode::UPSCALE_4K:
+    case setup_wizard::UpscaleMode::UPSCALE_4K:
     {
       m_windowWidth = 3840;
       m_windowHeight = 2160;
@@ -140,7 +140,7 @@ std::tuple<int, int, int, int, int, int, int, int, int> sw::CaptureSetupWizard::
     }
     break;
 
-    case setup_wizard::CaptureMode::DEFAULT:
+    case setup_wizard::UpscaleMode::DEFAULT:
     default:
     {
       m_windowWidth = monitorWidth;

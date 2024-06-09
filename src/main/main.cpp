@@ -58,14 +58,6 @@ int main(int argc, char *argv[])
     break;
   }
 
-  // Calculate scale.
-  float scaleX = static_cast<float>((float)outWinWidth / capMonWidth);
-  float scaleY = static_cast<float>((float)outWinHeight / capMonHeight);
-  areaSelectX0 *= scaleX;
-  areaSelectY0 *= scaleY;
-  areaSelectX1 *= scaleX;
-  areaSelectY1 *= scaleY;
-
   // Create main window
   auto result = mh::Win32MessageHandler::getInstance().init((HINSTANCE)0, 1, upscaleWidth, upscaleHeight);
   if (!result)
@@ -85,6 +77,7 @@ int main(int argc, char *argv[])
   // Create device resources.
   renderer::DeviceResources deviceResources;
   renderer::DX11RGB32Renderer renderer;
+  deviceResources.create(previewHwnd, upscaleWidth, upscaleHeight, 60);
   if (is4K)
   {
     if (isDestWinSmallerThanCapWin)
@@ -112,7 +105,6 @@ int main(int argc, char *argv[])
     renderer.init(deviceResources, nullptr, nullptr, capMonWidth, capMonHeight, outWinWidth, outWinHeight);
     renderer.createScaledAreaCB(areaSelectY0, areaSelectX0, areaSelectX1, areaSelectY1, outWinWidth, outWinHeight);
   }
-  deviceResources.create(previewHwnd, upscaleWidth, upscaleHeight, 60);
 
   // Create capture class.
   core::CaptureController captureController;
