@@ -6,6 +6,8 @@
 #include <chrono>
 #include <thread>
 
+#define USE_FREE_THREADED_MODE (1)
+
 using namespace core;
 
 HwndCapture::HwndCapture(const directx::Direct3D11::IDirect3DDevice& device, const winrt::GraphicsCaptureItem& item, const directx::DirectXPixelFormat pixelFormat)
@@ -27,12 +29,21 @@ HwndCapture::HwndCapture(const directx::Direct3D11::IDirect3DDevice& device, con
     );
 
   // Create framepool, define pixel format (DXGI_FORMAT_R8G8B8A8_UNORM), and frame size. 
+#if USE_FREE_THREADED_MODE
+  m_framePool = winrt::Direct3D11CaptureFramePool::CreateFreeThreaded(
+    m_device
+    , m_pixelFormat
+    , 2
+    , size
+    );
+#else
   m_framePool = winrt::Direct3D11CaptureFramePool::Create(
     m_device
     , m_pixelFormat
     , 2
     , size
     );
+#endif
   m_session = m_framePool.CreateCaptureSession(m_item);
   m_lastSize = size;
   m_frameArrived = m_framePool.FrameArrived(winrt::auto_revoke, { this, &HwndCapture::onFrameArrived });
