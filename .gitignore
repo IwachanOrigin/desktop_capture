@@ -1,0 +1,11 @@
+
+.cache/
+build/
+
+compile_commands.json
+*.user
+version.h
+videoRGB32PS.h
+videoRGB32VS.h
+NIS_Main.h
+
