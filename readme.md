@@ -5,10 +5,6 @@
 
 Desktop capture software using Windows Graphics API.
 
-## Demo
-
-
-
 ## Features
 
     - Select a capture monitor
